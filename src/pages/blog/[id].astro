@@ -1,0 +1,77 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import SkillBadge from '../../components/SkillBadge.astro';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  const sorted = posts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+  return sorted.map((post, index) => ({
+    params: { id: post.id },
+    props: {
+      post,
+      prev: sorted[index + 1] ?? null,
+      next: sorted[index - 1] ?? null,
+    },
+  }));
+}
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+  prev: CollectionEntry<'blog'> | null;
+  next: CollectionEntry<'blog'> | null;
+}
+
+const { post, prev, next } = Astro.props;
+const { Content } = await render(post);
+
+const wordCount = (post.body ?? '').split(/\s+/).length;
+const readingTime = Math.ceil(wordCount / 200);
+
+const formatted = post.data.date.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<Layout title={`${post.data.title} — Anastasia Coffman`} description={post.data.description}>
+  <article>
+    <header class="mb-10">
+      <a href="/blog" class="font-mono text-xs text-overlay0 hover:text-text transition-colors mb-6 inline-block">← /blog</a>
+      <h1 class="font-mono text-2xl font-bold text-text mb-4">{post.data.title}</h1>
+      <div class="flex items-center gap-4 font-mono text-xs text-overlay0 mb-4">
+        <time>{formatted}</time>
+        <span>·</span>
+        <span>{readingTime} min read</span>
+      </div>
+      <div class="flex flex-wrap gap-2">
+        {post.data.tags.map(tag => <SkillBadge name={tag} variant="tag" />)}
+      </div>
+    </header>
+
+    <div class="prose max-w-none">
+      <Content />
+    </div>
+
+    <nav class="mt-16 pt-8 border-t border-surface0 grid grid-cols-2 gap-4 font-mono text-sm">
+      <div>
+        {prev && (
+          <a href={`/blog/${prev.id}`} class="group flex flex-col gap-1 hover:text-text transition-colors">
+            <span class="text-overlay0 text-xs">← older</span>
+            <span class="text-subtext group-hover:text-text transition-colors">{prev.data.title}</span>
+          </a>
+        )}
+      </div>
+      <div class="text-right">
+        {next && (
+          <a href={`/blog/${next.id}`} class="group flex flex-col gap-1 items-end hover:text-text transition-colors">
+            <span class="text-overlay0 text-xs">newer →</span>
+            <span class="text-subtext group-hover:text-text transition-colors">{next.data.title}</span>
+          </a>
+        )}
+      </div>
+    </nav>
+  </article>
+</Layout>
