@@ -1,0 +1,79 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import BlogPostCard from '../../components/BlogPostCard.astro';
+import { getCollection } from 'astro:content';
+
+const allPosts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const allTags = [...new Set(allPosts.flatMap(p => p.data.tags))].sort();
+---
+
+<Layout title="Blog — Anastasia Coffman" description="Writing on engineering and career by Anastasia Coffman.">
+  <section>
+    <h1 class="font-mono text-sm text-overlay0 mb-8">// writing</h1>
+
+    <div class="mb-8 flex flex-wrap gap-2 items-center">
+      <span class="font-mono text-xs text-overlay0 mr-2">filter:</span>
+      <button
+        data-tag=""
+        class="tag-btn font-mono text-xs px-2 py-1 rounded border bg-surface0 text-subtext border-surface0 hover:border-overlay0 transition-colors"
+      >
+        all
+      </button>
+      {allTags.map(tag => (
+        <button
+          data-tag={tag}
+          class="tag-btn font-mono text-xs px-2 py-1 rounded border bg-surface0 text-peach border-surface0 hover:border-overlay0 transition-colors"
+        >
+          {tag}
+        </button>
+      ))}
+    </div>
+
+    <div id="post-list">
+      {allPosts.map(post => (
+        <div data-tags={JSON.stringify(post.data.tags)} class="post-item">
+          <BlogPostCard
+            title={post.data.title}
+            date={post.data.date}
+            description={post.data.description}
+            tags={post.data.tags}
+            slug={post.id}
+          />
+        </div>
+      ))}
+    </div>
+  </section>
+</Layout>
+
+<script>
+  function applyFilter(tag: string) {
+    const items = document.querySelectorAll<HTMLElement>('.post-item');
+    items.forEach(item => {
+      const tags: string[] = JSON.parse(item.dataset.tags || '[]');
+      item.style.display = (!tag || tags.includes(tag)) ? '' : 'none';
+    });
+
+    document.querySelectorAll<HTMLElement>('.tag-btn').forEach(btn => {
+      const active = btn.dataset.tag === tag;
+      btn.classList.toggle('border-mauve', active);
+      btn.classList.toggle('text-mauve', active);
+    });
+
+    const url = new URL(window.location.href);
+    if (tag) {
+      url.searchParams.set('tag', tag);
+    } else {
+      url.searchParams.delete('tag');
+    }
+    window.history.replaceState({}, '', url.toString());
+  }
+
+  const initialTag = new URL(window.location.href).searchParams.get('tag') || '';
+  applyFilter(initialTag);
+
+  document.querySelectorAll<HTMLElement>('.tag-btn').forEach(btn => {
+    btn.addEventListener('click', () => applyFilter(btn.dataset.tag || ''));
+  });
+</script>
