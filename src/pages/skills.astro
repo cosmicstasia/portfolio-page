@@ -1,0 +1,46 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SkillBadge from '../components/SkillBadge.astro';
+
+const categories = [
+  {
+    name: 'Languages',
+    skills: ['TypeScript', 'JavaScript', 'Go', 'Python', 'Rust', 'SQL'],
+  },
+  {
+    name: 'Frameworks & Libraries',
+    skills: ['Node.js', 'FastAPI', 'React', 'Astro', 'Express'],
+  },
+  {
+    name: 'Data & Storage',
+    skills: ['PostgreSQL', 'Redis', 'DynamoDB', 'SQLite'],
+  },
+  {
+    name: 'Infrastructure & Tools',
+    skills: ['Docker', 'Kubernetes', 'AWS', 'Terraform', 'GitHub Actions', 'Linux'],
+  },
+  {
+    name: 'Practices',
+    skills: ['TDD', 'CI/CD', 'REST APIs', 'gRPC', 'Agile', 'Code Review'],
+  },
+];
+---
+
+<Layout title="Skills — Anastasia Coffman" description="Technical skills of Anastasia Coffman.">
+  <section>
+    <h1 class="font-mono text-sm text-overlay0 mb-10">// skills</h1>
+
+    <div class="space-y-10">
+      {categories.map(cat => (
+        <div>
+          <div class="font-mono text-sm text-overlay0 mb-4">
+            <span class="text-surface1">// </span>{cat.name.toLowerCase()}
+          </div>
+          <div class="flex flex-wrap gap-2">
+            {cat.skills.map(skill => <SkillBadge name={skill} />)}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+</Layout>
