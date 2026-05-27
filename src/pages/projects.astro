@@ -1,0 +1,42 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+
+const projects = [
+  {
+    title: 'Project Alpha',
+    description: 'A brief description of what this project does and why it matters to its users.',
+    tech: ['TypeScript', 'Node.js', 'PostgreSQL', 'Docker'],
+    github: 'https://github.com/anastasiacoffman',
+  },
+  {
+    title: 'Project Beta',
+    description: 'A brief description of what this project does and why it matters to its users.',
+    tech: ['Go', 'gRPC', 'Redis', 'Kubernetes'],
+    github: 'https://github.com/anastasiacoffman',
+    live: 'https://example.com',
+  },
+  {
+    title: 'Project Gamma',
+    description: 'A brief description of what this project does and why it matters to its users.',
+    tech: ['Python', 'FastAPI', 'AWS Lambda', 'DynamoDB'],
+    github: 'https://github.com/anastasiacoffman',
+  },
+  {
+    title: 'Project Delta',
+    description: 'A brief description of what this project does and why it matters to its users.',
+    tech: ['Rust', 'WebAssembly', 'JavaScript'],
+    github: 'https://github.com/anastasiacoffman',
+    live: 'https://example.com',
+  },
+];
+---
+
+<Layout title="Projects — Anastasia Coffman" description="Software projects by Anastasia Coffman.">
+  <section>
+    <h1 class="font-mono text-sm text-overlay0 mb-8">// projects</h1>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {projects.map(p => <ProjectCard {...p} />)}
+    </div>
+  </section>
+</Layout>
