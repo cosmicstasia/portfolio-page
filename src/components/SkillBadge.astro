@@ -1,0 +1,15 @@
+---
+interface Props {
+  name: string;
+  variant?: 'default' | 'tag';
+}
+const { name, variant = 'default' } = Astro.props;
+---
+
+<span class={`font-mono text-xs px-2 py-1 rounded border ${
+  variant === 'tag'
+    ? 'bg-surface0 text-peach border-surface0'
+    : 'bg-surface0 text-subtext border-surface0'
+}`}>
+  {name}
+</span>

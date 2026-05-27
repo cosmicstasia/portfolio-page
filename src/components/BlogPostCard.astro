@@ -1,0 +1,31 @@
+---
+import SkillBadge from './SkillBadge.astro';
+
+interface Props {
+  title: string;
+  date: Date;
+  description: string;
+  tags: string[];
+  slug: string;
+}
+const { title, date, description, tags, slug } = Astro.props;
+
+const formatted = date.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<a href={`/blog/${slug}`} class="block group">
+  <div class="border-b border-surface0 py-6 hover:border-surface1 transition-colors">
+    <div class="flex items-baseline justify-between gap-4 mb-2">
+      <h3 class="font-mono text-base font-semibold text-text group-hover:text-blue transition-colors">{title}</h3>
+      <time class="font-mono text-xs text-overlay0 shrink-0">{formatted}</time>
+    </div>
+    <p class="text-sm text-subtext leading-relaxed mb-3" style="font-family: system-ui, -apple-system, sans-serif;">{description}</p>
+    <div class="flex flex-wrap gap-2">
+      {tags.map(t => <SkillBadge name={t} variant="tag" />)}
+    </div>
+  </div>
+</a>
