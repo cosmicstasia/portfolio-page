@@ -23,7 +23,7 @@ const formatted = date.toLocaleDateString('en-US', {
       <h3 class="font-mono text-base font-semibold text-text group-hover:text-blue transition-colors">{title}</h3>
       <time class="font-mono text-xs text-overlay0 shrink-0">{formatted}</time>
     </div>
-    <p class="text-sm text-subtext leading-relaxed mb-3" style="font-family: system-ui, -apple-system, sans-serif;">{description}</p>
+    <p class="text-sm text-subtext leading-relaxed mb-3 font-sans">{description}</p>
     <div class="flex flex-wrap gap-2">
       {tags.map(t => <SkillBadge name={t} variant="tag" />)}
     </div>

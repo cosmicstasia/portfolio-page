@@ -28,7 +28,7 @@ const { title, description, tech, github, live } = Astro.props;
       )}
     </div>
   </div>
-  <p class="text-sm text-subtext leading-relaxed" style="font-family: system-ui, -apple-system, sans-serif;">{description}</p>
+  <p class="text-sm text-subtext leading-relaxed font-sans">{description}</p>
   <div class="flex flex-wrap gap-2 mt-auto">
     {tech.map(t => <SkillBadge name={t} />)}
   </div>
