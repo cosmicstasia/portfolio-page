@@ -1,0 +1,81 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const experience = [
+  {
+    role: 'Software Engineer',
+    company: 'Company Name',
+    dates: '2023 – present',
+    bullets: [
+      'Built and maintained X, reducing Y by Z%.',
+      'Led the migration of legacy service to modern stack.',
+      'Collaborated with cross-functional team to ship feature on time.',
+    ],
+  },
+  {
+    role: 'Junior Software Engineer',
+    company: 'Previous Company',
+    dates: '2021 – 2023',
+    bullets: [
+      'Implemented new API endpoints serving N requests per day.',
+      'Improved test coverage from X% to Y%.',
+      'Participated in on-call rotation, resolving P0 incidents.',
+    ],
+  },
+];
+
+const education = [
+  {
+    degree: 'B.S. Computer Science',
+    school: 'University Name',
+    dates: '2017 – 2021',
+  },
+];
+---
+
+<Layout title="Experience — Anastasia Coffman" description="Professional experience of Anastasia Coffman.">
+  <section>
+    <h1 class="font-mono text-sm text-overlay0 mb-10">// experience</h1>
+
+    <div class="relative">
+      <div class="absolute left-0 top-0 bottom-0 w-px bg-surface0 ml-1"></div>
+
+      <div class="space-y-10 pl-8">
+        {experience.map(job => (
+          <div class="relative">
+            <div class="absolute -left-8 top-1.5 w-2 h-2 rounded-full bg-green border-2 border-base"></div>
+            <div class="font-mono">
+              <div class="text-mauve text-base font-semibold">{job.role}</div>
+              <div class="text-overlay0 text-sm mt-1">{job.company} <span class="text-surface1">·</span> {job.dates}</div>
+            </div>
+            <ul class="mt-4 space-y-2">
+              {job.bullets.map(bullet => (
+                <li class="font-sans text-sm text-subtext leading-relaxed pl-4 relative before:absolute before:left-0 before:text-overlay0 before:content-['▸']">
+                  {bullet}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div class="mt-16">
+      <h2 class="font-mono text-sm text-overlay0 mb-8">// education</h2>
+      <div class="relative">
+        <div class="absolute left-0 top-0 bottom-0 w-px bg-surface0 ml-1"></div>
+        <div class="space-y-6 pl-8">
+          {education.map(edu => (
+            <div class="relative">
+              <div class="absolute -left-8 top-1.5 w-2 h-2 rounded-full bg-blue border-2 border-base"></div>
+              <div class="font-mono">
+                <div class="text-text text-base font-semibold">{edu.degree}</div>
+                <div class="text-overlay0 text-sm mt-1">{edu.school} <span class="text-surface1">·</span> {edu.dates}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
