@@ -1,0 +1,75 @@
+---
+const pathname = Astro.url.pathname;
+
+const links = [
+  { href: '/projects', label: 'projects' },
+  { href: '/experience', label: 'experience' },
+  { href: '/skills', label: 'skills' },
+  { href: '/blog', label: 'blog' },
+  { href: '/about', label: 'about' },
+  { href: '/contact', label: 'contact' },
+];
+
+function isActive(href: string) {
+  return pathname === href || pathname.startsWith(href + '/');
+}
+---
+
+<nav class="sticky top-0 z-50 bg-mantle border-b border-surface0">
+  <div class="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
+    <a href="/" class="font-mono text-sm text-overlay0 hover:text-text transition-colors">
+      <span class="text-green">anastasia</span><span class="text-overlay0">@portfolio</span><span class="text-overlay0">:~$</span>
+    </a>
+
+    <!-- Desktop nav -->
+    <div class="hidden md:flex items-center gap-6">
+      {links.map(({ href, label }) => (
+        <a
+          href={href}
+          class={`font-mono text-sm transition-colors hover:text-text ${
+            isActive(href) ? 'text-mauve' : 'text-overlay0'
+          }`}
+        >
+          <span class="text-overlay0">~/</span>{label}
+        </a>
+      ))}
+    </div>
+
+    <!-- Mobile hamburger -->
+    <button
+      id="nav-toggle"
+      class="md:hidden text-overlay0 hover:text-text transition-colors"
+      aria-label="Toggle navigation"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <line x1="3" y1="12" x2="21" y2="12"/>
+        <line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="nav-menu" class="hidden md:hidden border-t border-surface0 bg-mantle">
+    <div class="max-w-5xl mx-auto px-6 py-4 flex flex-col gap-4">
+      {links.map(({ href, label }) => (
+        <a
+          href={href}
+          class={`font-mono text-sm transition-colors hover:text-text ${
+            isActive(href) ? 'text-mauve' : 'text-overlay0'
+          }`}
+        >
+          <span class="text-overlay0">~/</span>{label}
+        </a>
+      ))}
+    </div>
+  </div>
+</nav>
+
+<script>
+  const toggle = document.getElementById('nav-toggle');
+  const menu = document.getElementById('nav-menu');
+  toggle?.addEventListener('click', () => {
+    menu?.classList.toggle('hidden');
+  });
+</script>
