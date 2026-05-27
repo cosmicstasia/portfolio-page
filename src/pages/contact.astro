@@ -1,0 +1,78 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { Mail } from 'lucide-astro';
+---
+
+<Layout title="Contact — Anastasia Coffman" description="Get in touch with Anastasia Coffman.">
+  <section class="max-w-xl">
+    <h1 class="font-mono text-sm text-overlay0 mb-8">// contact</h1>
+
+    <p class="font-sans text-sm text-subtext mb-8 leading-relaxed">
+      Have a role in mind, want to collaborate, or just want to say hello? Send me a message.
+    </p>
+
+    <div data-fs-success class="hidden bg-mantle border border-green text-green font-mono text-sm p-4 rounded mb-6">
+      message sent — I'll get back to you soon.
+    </div>
+
+    <div data-fs-error class="hidden bg-mantle border border-red text-red font-mono text-sm p-4 rounded mb-6"></div>
+
+    <form id="contact-form" class="space-y-6">
+      <div>
+        <label for="name" class="font-mono text-xs text-overlay0 block mb-2">name</label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          required
+          data-fs-field
+          class="w-full bg-mantle border border-surface0 rounded px-4 py-3 font-mono text-sm text-text placeholder-overlay0 focus:outline-none focus:border-blue transition-colors"
+          placeholder="Your name"
+        />
+        <span data-fs-error="name" class="font-mono text-xs text-red mt-1 block"></span>
+      </div>
+
+      <div>
+        <label for="email" class="font-mono text-xs text-overlay0 block mb-2">email</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          required
+          data-fs-field
+          class="w-full bg-mantle border border-surface0 rounded px-4 py-3 font-mono text-sm text-text placeholder-overlay0 focus:outline-none focus:border-blue transition-colors"
+          placeholder="you@example.com"
+        />
+        <span data-fs-error="email" class="font-mono text-xs text-red mt-1 block"></span>
+      </div>
+
+      <div>
+        <label for="message" class="font-mono text-xs text-overlay0 block mb-2">message</label>
+        <textarea
+          id="message"
+          name="message"
+          required
+          rows="5"
+          data-fs-field
+          class="w-full bg-mantle border border-surface0 rounded px-4 py-3 font-mono text-sm text-text placeholder-overlay0 focus:outline-none focus:border-blue transition-colors resize-none"
+          placeholder="What's on your mind?"
+        ></textarea>
+        <span data-fs-error="message" class="font-mono text-xs text-red mt-1 block"></span>
+      </div>
+
+      <button
+        type="submit"
+        data-fs-submit-btn
+        class="flex items-center gap-2 bg-green text-base font-mono text-sm font-semibold px-6 py-3 rounded hover:opacity-90 transition-opacity disabled:opacity-50"
+      >
+        <Mail size={14} />
+        send message
+      </button>
+    </form>
+  </section>
+</Layout>
+
+<script>
+  import { initForm } from '@formspree/ajax';
+  initForm({ formElement: '#contact-form', formId: 'xjgzjgpq' });
+</script>
