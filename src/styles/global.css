@@ -1,1 +1,78 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
+
+@theme {
+  --color-base: #1e1e2e;
+  --color-mantle: #181825;
+  --color-crust: #11111b;
+  --color-surface0: #313244;
+  --color-surface1: #45475a;
+  --color-overlay0: #6c7086;
+  --color-overlay1: #7f849c;
+  --color-subtext: #a6adc8;
+  --color-text: #cdd6f4;
+  --color-green: #a6e3a1;
+  --color-blue: #89b4fa;
+  --color-mauve: #cba6f7;
+  --color-peach: #fab387;
+  --color-red: #f38ba8;
+  --color-yellow: #f9e2af;
+  --color-teal: #94e2d5;
+
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-sans: system-ui, -apple-system, sans-serif;
+}
+
+html, body {
+  margin: 0;
+  width: 100%;
+  min-height: 100%;
+  background-color: #1e1e2e;
+  color: #cdd6f4;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Prose styles for blog posts */
+.prose {
+  font-family: system-ui, -apple-system, sans-serif;
+  line-height: 1.8;
+  color: #cdd6f4;
+}
+
+.prose h1, .prose h2, .prose h3, .prose h4 {
+  font-family: 'JetBrains Mono', monospace;
+  color: #cdd6f4;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.prose a {
+  color: #89b4fa;
+  text-decoration: underline;
+}
+
+.prose code {
+  font-family: 'JetBrains Mono', monospace;
+  background: #313244;
+  padding: 0.15em 0.4em;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+
+.prose pre {
+  border-radius: 8px;
+  border: 1px solid #313244;
+  overflow-x: auto;
+}
+
+.prose pre code {
+  background: transparent;
+  padding: 0;
+}
+
+.prose blockquote {
+  border-left: 3px solid #cba6f7;
+  padding-left: 1rem;
+  color: #a6adc8;
+  font-style: italic;
+}
