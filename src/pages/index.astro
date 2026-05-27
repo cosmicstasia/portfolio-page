@@ -1,11 +1,118 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import BlogPostCard from '../components/BlogPostCard.astro';
+import { getCollection } from 'astro:content';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+
+const pinnedProjects = [
+  {
+    title: 'Project Alpha',
+    description: 'A brief description of what this project does and why it matters.',
+    tech: ['TypeScript', 'Node.js', 'PostgreSQL'],
+    github: 'https://github.com/anastasiacoffman',
+  },
+  {
+    title: 'Project Beta',
+    description: 'A brief description of what this project does and why it matters.',
+    tech: ['Go', 'Docker', 'Redis'],
+    github: 'https://github.com/anastasiacoffman',
+    live: 'https://example.com',
+  },
+  {
+    title: 'Project Gamma',
+    description: 'A brief description of what this project does and why it matters.',
+    tech: ['Python', 'FastAPI', 'AWS'],
+    github: 'https://github.com/anastasiacoffman',
+  },
+];
 ---
 
 <Layout>
-	<Welcome />
+  <!-- whoami hero -->
+  <section class="mb-20">
+    <div class="bg-mantle border border-surface0 rounded-lg p-8 font-mono">
+      <div class="text-overlay0 text-sm mb-6">● ● ●</div>
+      <div class="text-sm text-overlay0 mb-3">
+        anastasia@portfolio:~$ <span class="text-text">whoami</span>
+      </div>
+      <div class="text-sm leading-loose mt-4">
+        <div>
+          <span class="text-mauve">name</span>
+          <span class="text-overlay0">:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+          <span class="text-text">Anastasia Coffman</span>
+        </div>
+        <div>
+          <span class="text-mauve">role</span>
+          <span class="text-overlay0">:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+          <span class="text-text">Software Engineer</span>
+        </div>
+        <div>
+          <span class="text-mauve">focus</span>
+          <span class="text-overlay0">:&nbsp;&nbsp;&nbsp;&nbsp;</span>
+          <span class="text-text">["backend", "systems", "web"]</span>
+        </div>
+        <div>
+          <span class="text-mauve">writing</span>
+          <span class="text-overlay0">:&nbsp;&nbsp;&nbsp;</span>
+          <span class="text-blue">true</span>
+        </div>
+        <div>
+          <span class="text-mauve">status</span>
+          <span class="text-overlay0">:&nbsp;&nbsp;&nbsp;&nbsp;</span>
+          <span class="text-green">open_to_work</span>
+        </div>
+      </div>
+      <div class="mt-6 text-sm text-overlay0">
+        anastasia@portfolio:~$ <span class="text-green animate-pulse">▌</span>
+      </div>
+      <div class="mt-8 flex flex-wrap gap-4 items-center">
+        <a
+          href="/projects"
+          class="font-mono text-sm border border-green text-green px-4 py-2 rounded hover:bg-green hover:text-base transition-colors"
+        >
+          ./projects
+        </a>
+        <a
+          href="/resume.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="font-mono text-sm text-blue hover:text-text transition-colors"
+        >
+          resume ↗
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pinned projects -->
+  <section class="mb-20">
+    <div class="flex items-baseline justify-between mb-6">
+      <h2 class="font-mono text-sm text-overlay0">// projects</h2>
+      <a href="/projects" class="font-mono text-xs text-blue hover:text-text transition-colors">view all →</a>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {pinnedProjects.map(p => <ProjectCard {...p} />)}
+    </div>
+  </section>
+
+  <!-- Latest posts -->
+  <section>
+    <div class="flex items-baseline justify-between mb-2">
+      <h2 class="font-mono text-sm text-overlay0">// writing</h2>
+      <a href="/blog" class="font-mono text-xs text-blue hover:text-text transition-colors">read more →</a>
+    </div>
+    {posts.map(post => (
+      <BlogPostCard
+        title={post.data.title}
+        date={post.data.date}
+        description={post.data.description}
+        tags={post.data.tags}
+        slug={post.id}
+      />
+    ))}
+  </section>
 </Layout>
