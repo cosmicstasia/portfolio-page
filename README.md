@@ -1,46 +1,51 @@
-# Astro Starter Kit: Basics
+# acoffman.dev
+
+Personal portfolio site for Anastasia Coffman. Built with Astro 6, Tailwind CSS v4, and a dark terminal aesthetic using the Catppuccin Mocha color palette.
+
+## Stack
+
+- **[Astro 6](https://astro.build)** — static site generation
+- **[Tailwind CSS v4](https://tailwindcss.com)** — via `@tailwindcss/vite`, no config file
+- **[lucide-astro](https://github.com/lucide-icons/lucide)** — icons
+- **[@formspree/ajax](https://formspree.io)** — contact form
+- **Shiki** — syntax highlighting with `catppuccin-mocha` theme
+- **JetBrains Mono** — monospace font throughout
+
+## Pages
+
+| Route | Description |
+| :--- | :--- |
+| `/` | Homepage — whoami hero, pinned projects, latest posts |
+| `/about` | Terminal-style bio block |
+| `/projects` | Project card grid |
+| `/experience` | Work history timeline + education |
+| `/skills` | Skills grouped by category |
+| `/blog` | Post list with client-side tag filter |
+| `/blog/[id]` | Individual blog post with reading time and prev/next nav |
+| `/contact` | Contact form via Formspree |
+
+## Development
 
 ```sh
-bun create astro@latest -- --template basics
+bun install       # install dependencies
+bun dev           # start dev server at localhost:4321
+bun run build     # production build to ./dist/
+bun preview       # preview production build
+bun astro check   # type-check .astro files
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Content
 
-## 🚀 Project Structure
+Blog posts live in `src/content/blog/` as Markdown files. Frontmatter schema:
 
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
+```yaml
+title: string
+date: YYYY-MM-DD
+description: string
+tags: [string]
+draft: boolean  # optional, defaults to false
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+## Deployment
 
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `bun install`             | Installs dependencies                            |
-| `bun dev`             | Starts local dev server at `localhost:4321`      |
-| `bun build`           | Build your production site to `./dist/`          |
-| `bun preview`         | Preview your build locally, before deploying     |
-| `bun astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `bun astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Deployed to Vercel. Pushes to `main` trigger automatic deploys.
