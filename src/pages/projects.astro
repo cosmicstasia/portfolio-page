@@ -4,30 +4,22 @@ import ProjectCard from '../components/ProjectCard.astro';
 
 const projects = [
   {
-    title: 'Project Alpha',
-    description: 'A brief description of what this project does and why it matters to its users.',
-    tech: ['TypeScript', 'Node.js', 'PostgreSQL', 'Docker'],
-    github: 'https://github.com/anastasiacoffman',
+    title: 'Quartzite',
+    description: 'Async video intelligence pipeline processing media streams through modular detection workers (face recognition, object detection, OCR) using Celery + Redis. PostgreSQL for metadata indexing, FAISS for vector similarity search, REST API for downstream consumers. Deployed on AWS EKS with GitLab CI/CD.',
+    tech: ['Python', 'FastAPI', 'Celery', 'Redis', 'PostgreSQL', 'FAISS', 'AWS EKS', 'GitLab CI/CD'],
+    github: 'https://github.com/cosmicstasia',
   },
   {
-    title: 'Project Beta',
-    description: 'A brief description of what this project does and why it matters to its users.',
-    tech: ['Go', 'gRPC', 'Redis', 'Kubernetes'],
-    github: 'https://github.com/anastasiacoffman',
-    live: 'https://example.com',
+    title: 'Home Network & Self-Hosted Infrastructure',
+    description: 'Production-grade home network running OPNsense firewall with Tailscale overlay, Pi-hole + Unbound as a full recursive DNS resolver, Caddy reverse proxy, and multiple self-hosted services. Wardriving setup with Kismet on Kali/Raspberry Pi. NixOS/Nix for reproducible dev environments across machines.',
+    tech: ['OPNsense', 'Tailscale', 'Pi-hole', 'Unbound', 'Caddy', 'NixOS', 'Kismet'],
+    github: 'https://github.com/cosmicstasia',
   },
   {
-    title: 'Project Gamma',
-    description: 'A brief description of what this project does and why it matters to its users.',
-    tech: ['Python', 'FastAPI', 'AWS Lambda', 'DynamoDB'],
-    github: 'https://github.com/anastasiacoffman',
-  },
-  {
-    title: 'Project Delta',
-    description: 'A brief description of what this project does and why it matters to its users.',
-    tech: ['Rust', 'WebAssembly', 'JavaScript'],
-    github: 'https://github.com/anastasiacoffman',
-    live: 'https://example.com',
+    title: 'FastAPI SMS Survey Platform',
+    description: 'SMS-based field survey reporting application built with FastAPI, Twilio, and MongoDB. Used in real data collection workflows for structured reporting from the field.',
+    tech: ['Python', 'FastAPI', 'Twilio', 'MongoDB'],
+    github: 'https://github.com/cosmicstasia',
   },
 ];
 ---
