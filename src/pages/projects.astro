@@ -21,6 +21,24 @@ const projects = [
     tech: ['Python', 'FastAPI', 'Twilio', 'MongoDB'],
     github: 'https://github.com/cosmicstasia',
   },
+  {
+    title: 'Distributed PDF OCR Pipeline',
+    description: 'Distributed pipeline for OCRing millions of PDFs on self-hosted hardware instead of paying for cloud compute. Docker Swarm workers pull jobs from RabbitMQ and write extracted text and metadata to MongoDB for downstream cleaning. A follow-on Kubernetes stage runs Celery workers on Valkey, autoscaled by queue depth with KEDA, to generate text embeddings with a locally served model via Ollama.',
+    tech: ['Python', 'Docker Swarm', 'RabbitMQ', 'Celery', 'Valkey', 'MongoDB', 'Ollama', 'KEDA', 'Helm'],
+    org: 'work @ Brookmimir LLC · private',
+  },
+  {
+    title: 'Self-Hosted Kubernetes & Network Infrastructure',
+    description: 'Company infrastructure as code: a Talos Linux Kubernetes cluster with Helm-managed monitoring, alerting, Spark batch jobs, and controller-driven upgrades; a self-hosted NetBird control plane (custom Helm chart) replacing Tailscale; a versioned Python CLI for UniFi firewall policy that is dry-run by default, snapshots before changes, and verifies rule ordering; and reusable Forgejo Actions workflows for a Kubernetes runner with a Podman sidecar.',
+    tech: ['Talos Linux', 'Kubernetes', 'Helm', 'NetBird', 'Spark', 'Prometheus', 'Python', 'UniFi', 'Forgejo Actions', 'Podman'],
+    org: 'work @ Brookmimir LLC · private',
+  },
+  {
+    title: 'Local News NLP Pipeline',
+    description: 'Distributed NLP pipeline that turns hyper-local news articles into structured event data. Documents are queued in Redis and fanned out to Celery workers, which use a locally hosted LLM through Ollama to extract records into Pydantic models. Results accumulate in a growing dataset that is batch-published to a geospatial data platform via its API. Containerized with Docker Compose and Helm for Kubernetes.',
+    tech: ['Python', 'Celery', 'Redis', 'Ollama', 'Pydantic', 'Docker', 'Helm', 'Kubernetes'],
+    org: 'work @ Brookmimir LLC · private',
+  },
 ];
 ---
 
