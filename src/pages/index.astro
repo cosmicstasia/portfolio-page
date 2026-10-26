@@ -33,12 +33,20 @@ const pinnedProjects = [
 <Layout>
   <!-- whoami hero -->
   <section class="mb-20">
-    <div class="bg-mantle border border-surface0 rounded-lg p-8 font-mono">
-      <div class="text-overlay0 text-sm mb-6">● ● ●</div>
-      <div class="text-sm text-overlay0 mb-3">
-        anastasia@portfolio:~$ <span class="text-text">whoami</span>
+    <div class="relative bg-mantle border border-surface0 rounded-lg p-8 font-mono overflow-hidden group">
+      <!-- subtle animated grid glow, Omarchy-esque -->
+      <div class="pointer-events-none absolute -top-24 -right-24 w-64 h-64 rounded-full bg-mauve/10 blur-3xl group-hover:bg-mauve/20 transition-colors duration-700"></div>
+      <div class="pointer-events-none absolute -bottom-24 -left-24 w-64 h-64 rounded-full bg-blue/10 blur-3xl"></div>
+
+      <div class="relative flex items-center gap-2 text-overlay0 text-sm mb-6">
+        <span class="w-3 h-3 rounded-full bg-red/70"></span>
+        <span class="w-3 h-3 rounded-full bg-yellow/70"></span>
+        <span class="w-3 h-3 rounded-full bg-green/70"></span>
       </div>
-      <div class="text-sm leading-loose mt-4">
+      <div class="relative text-sm text-overlay0 mb-3">
+        anastasia@portfolio:~$ <span id="typed-cmd" class="text-text"></span><span id="typed-cursor" class="text-green">▌</span>
+      </div>
+      <div id="whoami-output" class="relative text-sm leading-loose mt-4 opacity-0 transition-opacity duration-500">
         <div>
           <span class="text-mauve">name</span>
           <span class="text-overlay0">:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
@@ -64,11 +72,17 @@ const pinnedProjects = [
           <span class="text-overlay0">:&nbsp;&nbsp;&nbsp;&nbsp;</span>
           <span class="text-green">open_to_work</span>
         </div>
+        <div>
+          <span class="text-mauve">theme</span>
+          <span class="text-overlay0">:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+          <span id="theme-readout" class="text-peach">catppuccin</span>
+          <span class="text-overlay0 text-xs">(press t to cycle)</span>
+        </div>
       </div>
-      <div class="mt-6 text-sm text-overlay0">
+      <div class="relative mt-6 text-sm text-overlay0">
         anastasia@portfolio:~$ <span class="text-green animate-pulse">▌</span>
       </div>
-      <div class="mt-8 flex flex-wrap gap-4 items-center">
+      <div class="relative mt-8 flex flex-wrap gap-4 items-center">
         <a
           href="/projects"
           class="font-mono text-sm border border-green text-green px-4 py-2 rounded hover:bg-green hover:text-base transition-colors"
@@ -88,18 +102,22 @@ const pinnedProjects = [
   </section>
 
   <!-- Pinned projects -->
-  <section class="mb-20">
+  <section class="mb-20 reveal">
     <div class="flex items-baseline justify-between mb-6">
       <h2 class="font-mono text-sm text-overlay0">// projects</h2>
       <a href="/projects" class="font-mono text-xs text-blue hover:text-text transition-colors">view all →</a>
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      {pinnedProjects.map(p => <ProjectCard {...p} />)}
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 items-stretch">
+      {pinnedProjects.map((p, i) => (
+        <div class="reveal h-full" style={`transition-delay: ${i * 80}ms`}>
+          <ProjectCard {...p} />
+        </div>
+      ))}
     </div>
   </section>
 
   <!-- Latest posts -->
-  <section>
+  <section class="reveal">
     <div class="flex items-baseline justify-between mb-2">
       <h2 class="font-mono text-sm text-overlay0">// writing</h2>
       <a href="/blog" class="font-mono text-xs text-blue hover:text-text transition-colors">read more →</a>
@@ -115,3 +133,39 @@ const pinnedProjects = [
     ))}
   </section>
 </Layout>
+
+<script>
+  // Terminal-style typing effect for the hero `whoami` command.
+  function typeCommand() {
+    const el = document.getElementById('typed-cmd');
+    const cursor = document.getElementById('typed-cursor');
+    const output = document.getElementById('whoami-output');
+    if (!el || !output) return;
+
+    const text = 'whoami';
+    let i = 0;
+    el.textContent = '';
+
+    const tick = () => {
+      if (i <= text.length) {
+        el.textContent = text.slice(0, i);
+        i++;
+        setTimeout(tick, 80);
+      } else {
+        cursor?.classList.add('hidden');
+        output.classList.remove('opacity-0');
+      }
+    };
+    tick();
+  }
+
+  function syncThemeReadout() {
+    const readout = document.getElementById('theme-readout');
+    if (!readout) return;
+    readout.textContent = document.documentElement.getAttribute('data-theme') || 'catppuccin';
+  }
+
+  typeCommand();
+  syncThemeReadout();
+  document.addEventListener('themechange', syncThemeReadout);
+</script>

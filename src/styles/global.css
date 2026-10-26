@@ -1,6 +1,142 @@
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 
+/*
+  Theme system, Omarchy-style: every theme restyles the whole page at once
+  (the terminal "window", the nav, the wallpaper gradient, syntax colors).
+  Each theme is a flat set of CSS custom properties toggled by `data-theme`
+  on <html>; Tailwind's @theme reads the *default* (catppuccin-mocha) values
+  so arbitrary-value utility classes still work, but everything else should
+  reference the --color-* custom properties directly so it reacts live.
+*/
+
+:root,
+[data-theme='catppuccin'] {
+  --color-base: #1e1e2e;
+  --color-mantle: #181825;
+  --color-crust: #11111b;
+  --color-surface0: #313244;
+  --color-surface1: #45475a;
+  --color-overlay0: #6c7086;
+  --color-overlay1: #7f849c;
+  --color-subtext: #a6adc8;
+  --color-text: #cdd6f4;
+  --color-green: #a6e3a1;
+  --color-blue: #89b4fa;
+  --color-mauve: #cba6f7;
+  --color-peach: #fab387;
+  --color-red: #f38ba8;
+  --color-yellow: #f9e2af;
+  --color-teal: #94e2d5;
+  --wallpaper-a: #1e1e2e;
+  --wallpaper-b: #302d41;
+}
+
+[data-theme='tokyo-night'] {
+  --color-base: #1a1b26;
+  --color-mantle: #16161e;
+  --color-crust: #101014;
+  --color-surface0: #2a2e3f;
+  --color-surface1: #3b3f54;
+  --color-overlay0: #565f89;
+  --color-overlay1: #6c7190;
+  --color-subtext: #a9b1d6;
+  --color-text: #c0caf5;
+  --color-green: #9ece6a;
+  --color-blue: #7aa2f7;
+  --color-mauve: #bb9af7;
+  --color-peach: #ff9e64;
+  --color-red: #f7768e;
+  --color-yellow: #e0af68;
+  --color-teal: #7dcfff;
+  --wallpaper-a: #1a1b26;
+  --wallpaper-b: #272a40;
+}
+
+[data-theme='gruvbox'] {
+  --color-base: #282828;
+  --color-mantle: #1d2021;
+  --color-crust: #141617;
+  --color-surface0: #3c3836;
+  --color-surface1: #504945;
+  --color-overlay0: #928374;
+  --color-overlay1: #a89984;
+  --color-subtext: #d5c4a1;
+  --color-text: #ebdbb2;
+  --color-green: #b8bb26;
+  --color-blue: #83a598;
+  --color-mauve: #d3869b;
+  --color-peach: #fe8019;
+  --color-red: #fb4934;
+  --color-yellow: #fabd2f;
+  --color-teal: #8ec07c;
+  --wallpaper-a: #282828;
+  --wallpaper-b: #3c3020;
+}
+
+[data-theme='nord'] {
+  --color-base: #2e3440;
+  --color-mantle: #272c36;
+  --color-crust: #1f232c;
+  --color-surface0: #3b4252;
+  --color-surface1: #434c5e;
+  --color-overlay0: #4c566a;
+  --color-overlay1: #616e88;
+  --color-subtext: #d8dee9;
+  --color-text: #eceff4;
+  --color-green: #a3be8c;
+  --color-blue: #81a1c1;
+  --color-mauve: #b48ead;
+  --color-peach: #d08770;
+  --color-red: #bf616a;
+  --color-yellow: #ebcb8b;
+  --color-teal: #88c0d0;
+  --wallpaper-a: #2e3440;
+  --wallpaper-b: #2b3545;
+}
+
+[data-theme='rose-pine'] {
+  --color-base: #191724;
+  --color-mantle: #1f1d2e;
+  --color-crust: #16141f;
+  --color-surface0: #26233a;
+  --color-surface1: #403d52;
+  --color-overlay0: #6e6a86;
+  --color-overlay1: #908caa;
+  --color-subtext: #e0def4;
+  --color-text: #e0def4;
+  --color-green: #9ccfd8;
+  --color-blue: #9ccfd8;
+  --color-mauve: #c4a7e7;
+  --color-peach: #ea9a97;
+  --color-red: #eb6f92;
+  --color-yellow: #f6c177;
+  --color-teal: #9ccfd8;
+  --wallpaper-a: #191724;
+  --wallpaper-b: #2a2139;
+}
+
+[data-theme='flexoki-light'] {
+  --color-base: #fffcf0;
+  --color-mantle: #f2f0e5;
+  --color-crust: #e6e4d9;
+  --color-surface0: #e6e4d9;
+  --color-surface1: #d3d0c4;
+  --color-overlay0: #878580;
+  --color-overlay1: #6f6e69;
+  --color-subtext: #575653;
+  --color-text: #100f0f;
+  --color-green: #66800b;
+  --color-blue: #205ea6;
+  --color-mauve: #5e409d;
+  --color-peach: #bc5215;
+  --color-red: #af3029;
+  --color-yellow: #ad8301;
+  --color-teal: #24837b;
+  --wallpaper-a: #fffcf0;
+  --wallpaper-b: #e9e5d6;
+}
+
 @theme {
   --color-base: #1e1e2e;
   --color-mantle: #181825;
@@ -27,33 +163,78 @@ html, body {
   margin: 0;
   width: 100%;
   min-height: 100%;
-  background-color: #1e1e2e;
-  color: #cdd6f4;
+  background-color: var(--color-base);
+  color: var(--color-text);
   font-family: 'JetBrains Mono', monospace;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+* {
+  scrollbar-color: var(--color-surface1) transparent;
+}
+
+::selection {
+  background: var(--color-mauve);
+  color: var(--color-base);
+}
+
+/* Ambient animated wallpaper behind everything, theme-reactive */
+.wallpaper {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(circle at 15% 10%, color-mix(in srgb, var(--color-mauve) 14%, transparent), transparent 55%),
+              radial-gradient(circle at 85% 0%, color-mix(in srgb, var(--color-blue) 12%, transparent), transparent 50%),
+              radial-gradient(circle at 50% 100%, color-mix(in srgb, var(--color-green) 10%, transparent), transparent 55%),
+              linear-gradient(180deg, var(--wallpaper-a), var(--wallpaper-b));
+  background-size: 200% 200%;
+  animation: wallpaper-drift 24s ease-in-out infinite alternate;
+  transition: background 0.4s ease;
+}
+
+@keyframes wallpaper-drift {
+  0%   { background-position: 0% 0%; }
+  100% { background-position: 100% 100%; }
+}
+
+/* Reveal-on-scroll primitive, toggled by IntersectionObserver in Layout */
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wallpaper { animation: none; }
+  .reveal { transition: none; opacity: 1; transform: none; }
 }
 
 /* Prose styles for blog posts */
 .prose {
   font-family: system-ui, -apple-system, sans-serif;
   line-height: 1.8;
-  color: #cdd6f4;
+  color: var(--color-text);
 }
 
 .prose h1, .prose h2, .prose h3, .prose h4 {
   font-family: 'JetBrains Mono', monospace;
-  color: #cdd6f4;
+  color: var(--color-text);
   margin-top: 2rem;
   margin-bottom: 0.75rem;
 }
 
 .prose a {
-  color: #89b4fa;
+  color: var(--color-blue);
   text-decoration: underline;
 }
 
 .prose code {
   font-family: 'JetBrains Mono', monospace;
-  background: #313244;
+  background: var(--color-surface0);
   padding: 0.15em 0.4em;
   border-radius: 3px;
   font-size: 0.9em;
@@ -61,7 +242,7 @@ html, body {
 
 .prose pre {
   border-radius: 8px;
-  border: 1px solid #313244;
+  border: 1px solid var(--color-surface0);
   overflow-x: auto;
 }
 
@@ -71,8 +252,8 @@ html, body {
 }
 
 .prose blockquote {
-  border-left: 3px solid #cba6f7;
+  border-left: 3px solid var(--color-mauve);
   padding-left: 1rem;
-  color: #a6adc8;
+  color: var(--color-subtext);
   font-style: italic;
 }

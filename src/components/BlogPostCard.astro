@@ -17,8 +17,8 @@ const formatted = date.toLocaleDateString('en-US', {
 });
 ---
 
-<a href={`/blog/${slug}`} class="block group">
-  <div class="border-b border-surface0 py-6 hover:border-surface1 transition-colors">
+<a href={`/blog/${slug}`} class="block group reveal">
+  <div class="border-b border-surface0 py-6 transition-all duration-300 hover:border-mauve/50 hover:pl-2">
     <div class="flex items-baseline justify-between gap-4 mb-2">
       <h3 class="font-mono text-base font-semibold text-text group-hover:text-blue transition-colors">{title}</h3>
       <time class="font-mono text-xs text-overlay0 shrink-0">{formatted}</time>

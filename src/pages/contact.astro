@@ -73,6 +73,9 @@ import { Mail } from 'lucide-astro';
 </Layout>
 
 <script>
-  import { initForm } from '@formspree/ajax';
+  // Vite resolves the package's `browser` field (dist/global.js) by default,
+  // which is the auto-registering build and does not export `initForm`.
+  // Import the ESM entry directly to get the named export.
+  import { initForm } from '@formspree/ajax/dist/index.mjs';
   initForm({ formElement: '#contact-form', formId: 'xjgzjgpq' });
 </script>

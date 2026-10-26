@@ -10,12 +10,21 @@ const links = [
   { href: '/contact', label: 'contact' },
 ];
 
+const themeLabels: Record<string, string> = {
+  catppuccin: 'Catppuccin',
+  'tokyo-night': 'Tokyo Night',
+  gruvbox: 'Gruvbox',
+  nord: 'Nord',
+  'rose-pine': 'Rosé Pine',
+  'flexoki-light': 'Flexoki Light',
+};
+
 function isActive(href: string) {
   return pathname === href || pathname.startsWith(href + '/');
 }
 ---
 
-<nav class="sticky top-0 z-50 bg-mantle border-b border-surface0">
+<nav class="sticky top-0 z-50 bg-mantle/90 backdrop-blur border-b border-surface0">
   <div class="max-w-5xl mx-auto px-6 h-14 flex items-center justify-between">
     <a href="/" class="font-mono text-sm text-overlay0 hover:text-text transition-colors">
       <span class="text-green">anastasia</span><span class="text-overlay0">@portfolio</span><span class="text-overlay0">:~$</span>
@@ -33,6 +42,34 @@ function isActive(href: string) {
           <span class="text-overlay0">~/</span>{label}
         </a>
       ))}
+
+      <!-- Theme picker -->
+      <div class="relative">
+        <button
+          id="theme-toggle"
+          aria-label="Change theme"
+          title="Change theme (or press t)"
+          class="flex items-center justify-center w-8 h-8 rounded border border-surface0 text-overlay0 hover:text-text hover:border-overlay0 transition-colors"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/>
+            <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/>
+          </svg>
+        </button>
+        <div
+          id="theme-menu"
+          class="hidden absolute right-0 mt-2 w-44 bg-mantle border border-surface0 rounded-lg shadow-xl overflow-hidden"
+        >
+          {Object.entries(themeLabels).map(([value, label]) => (
+            <button
+              data-theme-option={value}
+              class="theme-option w-full text-left px-4 py-2 font-mono text-xs text-subtext hover:bg-surface0 hover:text-text transition-colors"
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+      </div>
     </div>
 
     <!-- Mobile hamburger -->
@@ -62,6 +99,16 @@ function isActive(href: string) {
           <span class="text-overlay0">~/</span>{label}
         </a>
       ))}
+      <div class="flex flex-wrap gap-2 pt-2 border-t border-surface0">
+        {Object.entries(themeLabels).map(([value, label]) => (
+          <button
+            data-theme-option={value}
+            class="theme-option font-mono text-xs px-2 py-1 rounded border border-surface0 text-subtext hover:text-text hover:border-overlay0 transition-colors"
+          >
+            {label}
+          </button>
+        ))}
+      </div>
     </div>
   </div>
 </nav>
@@ -71,5 +118,27 @@ function isActive(href: string) {
   const menu = document.getElementById('nav-menu');
   toggle?.addEventListener('click', () => {
     menu?.classList.toggle('hidden');
+  });
+
+  const themeToggle = document.getElementById('theme-toggle');
+  const themeMenu = document.getElementById('theme-menu');
+  themeToggle?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    themeMenu?.classList.toggle('hidden');
+  });
+  document.addEventListener('click', (e) => {
+    if (!themeMenu?.contains(e.target as Node) && e.target !== themeToggle) {
+      themeMenu?.classList.add('hidden');
+    }
+  });
+
+  document.querySelectorAll<HTMLElement>('.theme-option').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const theme = btn.dataset.themeOption;
+      if (theme && (window as any).__setTheme) {
+        (window as any).__setTheme(theme);
+      }
+      themeMenu?.classList.add('hidden');
+    });
   });
 </script>
