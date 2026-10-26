@@ -6,7 +6,7 @@ interface Props {
 const { name, variant = 'default' } = Astro.props;
 ---
 
-<span class={`font-mono text-xs px-2 py-1 rounded border ${
+<span class={`font-mono text-xs px-2 py-1 rounded border transition-colors duration-200 hover:border-overlay1 ${
   variant === 'tag'
     ? 'bg-surface0 text-peach border-surface0'
     : 'bg-surface0 text-subtext border-surface0'

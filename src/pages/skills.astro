@@ -28,11 +28,11 @@ const categories = [
 
 <Layout title="Skills — Anastasia Coffman" description="Technical skills of Anastasia Coffman.">
   <section>
-    <h1 class="font-mono text-sm text-overlay0 mb-10">// skills</h1>
+    <h1 class="font-mono text-sm text-overlay0 mb-10 reveal">// skills</h1>
 
     <div class="space-y-10">
-      {categories.map(cat => (
-        <div>
+      {categories.map((cat, i) => (
+        <div class="reveal" style={`transition-delay: ${i * 60}ms`}>
           <div class="font-mono text-sm text-overlay0 mb-4">
             <span class="text-surface1">// </span>{cat.name.toLowerCase()}
           </div>

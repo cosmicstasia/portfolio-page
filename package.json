@@ -8,16 +8,20 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview",
+    "preview": "bun run scripts/serve-dist.ts",
+    "preview:astro": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/check": "^0.9.9",
+    "@astrojs/check": "^0.9.12",
     "@formspree/ajax": "^1.1.5",
-    "@tailwindcss/vite": "^4.3.0",
-    "astro": "^6.3.8",
+    "@tailwindcss/vite": "^4.3.3",
+    "astro": "^7.4.2",
     "lucide-astro": "^0.556.0",
-    "tailwindcss": "^4.3.0",
+    "tailwindcss": "^4.3.3",
     "typescript": "^6.0.3"
+  },
+  "devDependencies": {
+    "bun-types": "^1.4.4"
   }
 }

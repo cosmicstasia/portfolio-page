@@ -22,17 +22,85 @@ const {
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <script is:inline>
+      // Set theme before paint to avoid a flash of the wrong theme.
+      (function () {
+        try {
+          var saved = localStorage.getItem('theme');
+          var theme = saved || 'catppuccin';
+          document.documentElement.setAttribute('data-theme', theme);
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
+    <div class="wallpaper" aria-hidden="true"></div>
     <NavBar />
     <main class="max-w-5xl mx-auto px-6 py-12">
       <slot />
     </main>
     <footer class="border-t border-surface0 mt-24">
-      <div class="max-w-5xl mx-auto px-6 py-8 font-mono text-sm text-overlay0 flex justify-between items-center">
+      <div class="max-w-5xl mx-auto px-6 py-8 font-mono text-sm text-overlay0 flex flex-col sm:flex-row gap-2 justify-between items-center">
         <span>anastasia@portfolio:~$</span>
-        <span>built with astro</span>
+        <span class="text-overlay0">
+          built with astro · press <kbd class="px-1.5 py-0.5 rounded border border-surface0 bg-mantle text-text">t</kbd> to change theme
+        </span>
       </div>
     </footer>
   </body>
 </html>
+
+<script>
+  const THEMES = ['catppuccin', 'tokyo-night', 'gruvbox', 'nord', 'rose-pine', 'flexoki-light'];
+
+  function setTheme(theme: string) {
+    document.documentElement.setAttribute('data-theme', theme);
+    try {
+      localStorage.setItem('theme', theme);
+    } catch (e) {}
+    document.dispatchEvent(new CustomEvent('themechange', { detail: { theme } }));
+  }
+
+  function cycleTheme() {
+    const current = document.documentElement.getAttribute('data-theme') || 'catppuccin';
+    const idx = THEMES.indexOf(current);
+    const next = THEMES[(idx + 1) % THEMES.length];
+    setTheme(next);
+  }
+
+  // Global `t` shortcut to cycle themes, Omarchy-style. Ignore it while
+  // typing in a form field so it doesn't hijack real text input.
+  document.addEventListener('keydown', (e) => {
+    const target = e.target as HTMLElement | null;
+    const typing = target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable);
+    if (typing || e.metaKey || e.ctrlKey || e.altKey) return;
+    if (e.key.toLowerCase() === 't') {
+      cycleTheme();
+    }
+  });
+
+  // Expose for the NavBar theme picker button.
+  (window as any).__setTheme = setTheme;
+  (window as any).__cycleTheme = cycleTheme;
+  (window as any).__THEMES = THEMES;
+
+  // Reveal-on-scroll for any .reveal element across pages.
+  const observer = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      }
+    },
+    { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+  );
+
+  function observeReveals() {
+    document.querySelectorAll('.reveal:not(.is-visible)').forEach((el) => observer.observe(el));
+  }
+
+  observeReveals();
+  document.addEventListener('astro:page-load', observeReveals);
+</script>

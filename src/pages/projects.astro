@@ -44,9 +44,13 @@ const projects = [
 
 <Layout title="Projects — Anastasia Coffman" description="Software projects by Anastasia Coffman.">
   <section>
-    <h1 class="font-mono text-sm text-overlay0 mb-8">// projects</h1>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      {projects.map(p => <ProjectCard {...p} />)}
+    <h1 class="font-mono text-sm text-overlay0 mb-8 reveal">// projects</h1>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 items-stretch">
+      {projects.map((p, i) => (
+        <div class="reveal h-full" style={`transition-delay: ${(i % 3) * 80}ms`}>
+          <ProjectCard {...p} />
+        </div>
+      ))}
     </div>
   </section>
 </Layout>
